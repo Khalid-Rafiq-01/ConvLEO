@@ -2,11 +2,11 @@
 
 ConvLEO is a convolutional extension of the **Latent Evolution Operator (LEO)** for wind-conditioned plume forecasting.
 
-Given a single observed plume snapshot \(u(x,y,t)\), wind speed \(U\), wind direction \(\theta\), and a user-specified time jump \(\tau\), ConvLEO predicts the future plume field
+Given a single observed plume snapshot $u(x,y,t)$, wind speed $U$, wind direction $\theta$, and a user-specified time jump $\tau$, ConvLEO predicts the future plume field
 
-\[
+```math
 \hat{u}(x,y,t+\tau)
-\]
+```
 
 in one shot, without autoregressive rollout.
 
@@ -14,11 +14,11 @@ in one shot, without autoregressive rollout.
 
 Most spatiotemporal forecasting models require step-by-step rollout from past frames. ConvLEO instead learns a latent state-to-state map:
 
-\[
+```math
 u(t),\; [U,\sin(\theta),\cos(\theta),\tau]
 \;\longrightarrow\;
 \hat{u}(t+\tau).
-\]
+```
 
 This allows arbitrary-time forecasts from a single observation time.
 
@@ -26,7 +26,7 @@ This allows arbitrary-time forecasts from a single observation time.
 
 ![ConvLEO results](assets/convleo_results.png)
 
-Green boxes denote the observed input \(u(t_1)\). Red boxes denote the single-shot prediction \(\hat{u}(t_2)\). The model forecasts \(u(t_2)\) directly from one snapshot and the conditioning vector \((U,\theta,\tau)\), with **no rollout**.
+Green boxes denote the observed input $u(t_1)$. Red boxes denote the single-shot prediction $\hat{u}(t_2)$. The model forecasts $u(t_2)$ directly from one snapshot and the conditioning vector $(U,\theta,\tau)$, with **no rollout**.
 
 ## Model Architecture
 
@@ -36,7 +36,8 @@ ConvLEO uses spatial latent tensors and convolutional propagation instead of fla
 
 ## Why ConvLEO?
 
-- **Single-shot forecasting:** predicts \(u(t+\tau)\) directly.
+- **Any observation time as input:** ConvLEO is not restricted to an ensemble of initial conditions; it can re-anchor from a plume snapshot observed at any time.
+- **Single-shot forecasting:** predicts $u(t+\tau)$ directly.
 - **No rollout drift:** avoids accumulated error from autoregressive prediction.
 - **Wind-conditioned:** conditions on wind speed and wind direction.
 - **Spatial latent structure:** preserves plume morphology better than flattened latent MLP propagation.
@@ -48,9 +49,9 @@ ConvLEO uses spatial latent tensors and convolutional propagation instead of fla
 
 ## Problem Setup
 
-- **Input:** observed plume field \(u(x,y,t)\), wind speed \(U\), wind direction \(\theta\), and time jump \(\tau\).
-- **Output:** predicted plume field \(\hat{u}(x,y,t+\tau)\).
-- **Conditioning vector:** \(\zeta = [U,\sin(\theta),\cos(\theta),\tau]\).
+- **Input:** observed plume field $u(x,y,t)$, wind speed $U$, wind direction $\theta$, and time jump $\tau$.
+- **Output:** predicted plume field $\hat{u}(x,y,t+\tau)$.
+- **Conditioning vector:** $\zeta = [U,\sin(\theta),\cos(\theta),\tau]$.
 
 ## Status
 
